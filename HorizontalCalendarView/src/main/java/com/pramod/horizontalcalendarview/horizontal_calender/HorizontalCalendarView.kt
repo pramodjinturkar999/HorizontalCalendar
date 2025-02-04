@@ -18,6 +18,7 @@ class HorizontalCalendarView @JvmOverloads constructor(
     private val recyclerView: RecyclerView
     private var adapter: DateAdapter? = null
     val dates = generateDates()
+    //test
 
     init {
         orientation = VERTICAL

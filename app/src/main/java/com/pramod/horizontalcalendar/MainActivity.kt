@@ -16,7 +16,10 @@ class MainActivity : ComponentActivity() {
 
         horizontalCalendarView = findViewById(R.id.horizontalCalendarView)
 
+        //test
+
     }
 
 
 }
+ 
