@@ -7,7 +7,6 @@ import com.pramod.horizontal_calender.HorizontalCalendarView
 
 private lateinit var horizontalCalendarView: HorizontalCalendarView
 
-
 class MainActivity : ComponentActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
