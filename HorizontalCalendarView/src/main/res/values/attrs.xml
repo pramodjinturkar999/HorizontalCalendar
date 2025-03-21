@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HorizontalCalendarView">
+        <attr name="dateTextColor" format="color"/>
+        <attr name="dateTextSize" format="dimension"/>
+        <attr name="dateTextStyle" format="integer"/>
+        <attr name="selectedDateTextColor" format="color"/>
+        <attr name="selectedDateBackgroundColor" format="color"/>
+    </declare-styleable>
+
+</resources>
