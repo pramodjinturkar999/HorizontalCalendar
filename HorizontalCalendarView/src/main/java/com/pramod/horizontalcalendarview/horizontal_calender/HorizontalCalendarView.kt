@@ -20,7 +20,9 @@ class HorizontalCalendarView @JvmOverloads constructor(
 
     private val recyclerView: RecyclerView
     private var adapter: DateAdapter? = null
-    private val dates = generateDates()
+    private var startDate = Calendar.getInstance().time
+    private var endDate = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.time
+    private var dates: List<Date> = listOf()
 
     // Attributes
     private var dateTextColor: Int = Color.BLACK
@@ -41,15 +43,15 @@ class HorizontalCalendarView @JvmOverloads constructor(
             .apply {
                 try {
                     dateTextColor =
-                        getColor(R.styleable.HorizontalCalendarView_TextColor, Color.BLACK)
+                        getColor(R.styleable.HorizontalCalendarView_dateColor, Color.BLACK)
                     dateTextSize =
-                        getDimension(R.styleable.HorizontalCalendarView_dateTextSize, 14f)
-                    dateTextStyle = getResourceId(R.styleable.HorizontalCalendarView_dateTextFont, 0)
+                        getDimension(R.styleable.HorizontalCalendarView_dateSize, 14f)
+                    dateTextStyle = getResourceId(R.styleable.HorizontalCalendarView_dateFont, 0)
                             .takeIf { it != 0 }?.let { ResourcesCompat.getFont(context, it) }
 
 
                     selectedDateTextColor = getColor(
-                        R.styleable.HorizontalCalendarView_selectedDateTextColor,
+                        R.styleable.HorizontalCalendarView_selectedDateColor,
                         Color.WHITE
                     )
                     selectedDateBackgroundColor = getColor(
@@ -62,7 +64,14 @@ class HorizontalCalendarView @JvmOverloads constructor(
             }
 
         getSelectedDate() {}
+        setDates()
     }
+
+    private fun setDates() {
+        dates = generateDates()  // Correctly assign the generated dates to the 'dates' variable
+        adapter?.notifyDataSetChanged() // Notify the adapter about data changes
+    }
+
 
     fun getSelectedDate(onDateSelected: (Date) -> Unit) {
         adapter = DateAdapter(
@@ -77,15 +86,33 @@ class HorizontalCalendarView @JvmOverloads constructor(
         recyclerView.adapter = adapter
     }
 
+    fun setStartDate(date: Date) {
+        startDate = date
+        setDates()
+    }
+
+    fun setEndDate(date: Date) {
+        endDate = date
+        setDates()
+    }
 
     fun generateDates(): List<Date> {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance().apply {
+            time = startDate ?: Calendar.getInstance().time
+        }
+
+        val defaultEndDate = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.time
+        val effectiveEndDate = endDate ?: defaultEndDate
 
         val dates = mutableListOf<Date>()
-        for (i in 0 until 365) {
+        while (calendar.time.before(effectiveEndDate) || calendar.time == effectiveEndDate) {
             dates.add(calendar.time)
             calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
+
         return dates
     }
+
+
+
 }

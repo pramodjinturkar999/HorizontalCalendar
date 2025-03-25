@@ -9,12 +9,12 @@
         android:id="@+id/horizontalCalendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:TextColor="#F57C00"
-        app:dateTextSize="20dp"
-        app:selectedDateTextColor="#F8FAF8"
+        app:dateColor="#F57C00"
+        app:dateSize="18dp"
+        app:selectedDateColor="#F8FAF8"
         app:selectedDateBackgroundColor="#388E3C"
-
         />
+
 
 
 </LinearLayout>

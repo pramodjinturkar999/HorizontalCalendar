@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import com.pramod.horizontal_calender.HorizontalCalendarView
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 
@@ -18,6 +19,11 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         horizontalCalendarView = findViewById(R.id.horizontalCalendarView)
+         val startDate = Calendar.getInstance().time
+         val endDate = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.time
+
+        horizontalCalendarView.setStartDate(startDate)
+        horizontalCalendarView.setEndDate(endDate)
 
         horizontalCalendarView.getSelectedDate { selectedDate ->
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
