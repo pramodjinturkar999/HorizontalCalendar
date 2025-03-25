@@ -3,6 +3,7 @@ package com.pramod.horizontal_calender
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +17,15 @@ import com.pramod.horizontalcalendarview.horizontal_calender.DateTextViewCustomi
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class DateAdapter(
     private val context: Context,
     private var dates: List<Date> = emptyList(),
     private val onDateSelected: ((Date) -> Unit)? = null,
-    private val customizer: HorizontalCalendarView? = null
+    private val dateTextColor: Int,
+    private val dateTextSize: Float,
+    private val selectedDateTextColor: Int,
+    private val selectedDateBackgroundColor: Int
 ) : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     private val dateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
@@ -31,17 +36,19 @@ class DateAdapter(
 
         fun bind(date: Date, isSelected: Boolean) {
             dateTextView.text = dateFormat.format(date)
-            val typeface = ResourcesCompat.getFont(context, R.font.roboto)
+            dateTextView.setTextColor(if (isSelected) selectedDateTextColor else dateTextColor)
+            dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dateTextSize)
+            dateTextView.setBackgroundColor(if (isSelected) selectedDateBackgroundColor else Color.TRANSPARENT)
 
-            if (isSelected) {
-                dateTextView.setBackgroundColor(customizer?.selectedDateBackgroundColor ?: Color.BLUE)
-                dateTextView.setTextColor(customizer?.selectedDateTextColor ?: Color.WHITE)
-                dateTextView.setTypeface(typeface, Typeface.BOLD)
-            } else {
-                dateTextView.setBackgroundColor(Color.TRANSPARENT)
-                dateTextView.setTextColor(customizer?.dateTextColor ?: Color.BLACK)
-                dateTextView.setTypeface(typeface, Typeface.NORMAL)
-            }
+//            itemView.setOnClickListener {
+//                val previousPosition = selectedPosition
+//                selectedPosition = adapterPosition
+//
+//                if (previousPosition != RecyclerView.NO_POSITION) {
+//                    notifyItemChanged(previousPosition)
+//                }
+//                notifyItemChanged(selectedPosition)
+//            }
 
             itemView.setOnClickListener {
                 val previousPosition = selectedPosition
@@ -52,7 +59,7 @@ class DateAdapter(
                 }
                 notifyItemChanged(selectedPosition)
 
-                onDateSelected?.invoke(date)
+                onDateSelected?.invoke(date) // Invoke the callback with the selected date
             }
         }
     }
@@ -66,13 +73,6 @@ class DateAdapter(
         holder.bind(dates[position], position == selectedPosition)
     }
 
-    fun clearSelection() {
-        val previousPosition = selectedPosition
-        if (previousPosition != RecyclerView.NO_POSITION) {
-            selectedPosition = RecyclerView.NO_POSITION
-            notifyItemChanged(previousPosition)
-        }
-    }
-
     override fun getItemCount(): Int = dates.size
 }
+

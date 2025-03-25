@@ -6,13 +6,11 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pramod.horizontalcalendarview.R
-import com.pramod.horizontalcalendarview.horizontal_calender.DateTextViewCustomizer
 import java.util.*
-import androidx.core.content.withStyledAttributes
 
 class HorizontalCalendarView @JvmOverloads constructor(
     context: Context,
@@ -20,15 +18,16 @@ class HorizontalCalendarView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    val recyclerView: RecyclerView
-    var adapter: DateAdapter? = null
-    val dates = generateDates()
+    private val recyclerView: RecyclerView
+    private var adapter: DateAdapter? = null
+    private val dates = generateDates()
 
-    var dateTextColor: Int = Color.BLACK
-    var dateTextSize: Float = 14f
-    var dateTextStyle: Int = Typeface.NORMAL
-    var selectedDateTextColor: Int = Color.WHITE
-    var selectedDateBackgroundColor: Int = Color.BLUE
+    // Attributes
+    private var dateTextColor: Int = Color.BLACK
+    private var dateTextSize: Float = 14f
+    private var dateTextStyle: Typeface? = null
+    private var selectedDateTextColor: Int = Color.WHITE
+    private var selectedDateBackgroundColor: Int = Color.BLUE
 
     init {
         orientation = VERTICAL
@@ -38,34 +37,52 @@ class HorizontalCalendarView @JvmOverloads constructor(
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        context.theme.obtainStyledAttributes(attrs, R.styleable.HorizontalCalendarView, 0, 0).apply {
-            try {
-                dateTextColor = getColor(R.styleable.HorizontalCalendarView_dateTextColor, Color.BLACK)
-                dateTextSize = getDimension(R.styleable.HorizontalCalendarView_dateTextSize, 14f)
-                dateTextStyle = getInt(R.styleable.HorizontalCalendarView_dateTextStyle, Typeface.NORMAL)
-                selectedDateTextColor = getColor(R.styleable.HorizontalCalendarView_selectedDateTextColor, Color.WHITE)
-                selectedDateBackgroundColor = getColor(R.styleable.HorizontalCalendarView_selectedDateBackgroundColor, Color.BLUE)
-            } finally {
-                recycle()
-            }
-        }
+        context.theme.obtainStyledAttributes(attrs, R.styleable.HorizontalCalendarView, 0, 0)
+            .apply {
+                try {
+                    dateTextColor =
+                        getColor(R.styleable.HorizontalCalendarView_TextColor, Color.BLACK)
+                    dateTextSize =
+                        getDimension(R.styleable.HorizontalCalendarView_dateTextSize, 14f)
+                    dateTextStyle = getResourceId(R.styleable.HorizontalCalendarView_dateTextFont, 0)
+                            .takeIf { it != 0 }?.let { ResourcesCompat.getFont(context, it) }
 
-        setDates(dates)
+
+                    selectedDateTextColor = getColor(
+                        R.styleable.HorizontalCalendarView_selectedDateTextColor,
+                        Color.WHITE
+                    )
+                    selectedDateBackgroundColor = getColor(
+                        R.styleable.HorizontalCalendarView_selectedDateBackgroundColor,
+                        Color.CYAN
+                    )
+                } finally {
+                    recycle()
+                }
+            }
+
+        getSelectedDate() {}
     }
 
-    fun setDates(dates: List<Date>) {
-        adapter = DateAdapter(context, dates, null, this)
+    fun getSelectedDate(onDateSelected: (Date) -> Unit) {
+        adapter = DateAdapter(
+            context,
+            dates,
+            onDateSelected,
+            dateTextColor,
+            dateTextSize,
+            selectedDateTextColor,
+            selectedDateBackgroundColor
+        )
         recyclerView.adapter = adapter
     }
 
-    fun clearSelection() {
-        adapter?.clearSelection()
-    }
 
     fun generateDates(): List<Date> {
         val calendar = Calendar.getInstance()
+
         val dates = mutableListOf<Date>()
-        for (i in 0 until 100) {
+        for (i in 0 until 365) {
             dates.add(calendar.time)
             calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
