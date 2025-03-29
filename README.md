@@ -24,7 +24,7 @@ Add this dependency in your **`build.gradle` (app module)** file:
 
 ```gradle
 dependencies {
-    implementation 'com.github.pramodjinturkar999:HorizontalCalendar:1.0.13'
+    implementation 'com.github.pramodjinturkar999:HorizontalCalendar:1.0.1'
 }
 ```
 
