@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.HorizontalCalendar" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.AppCompat.Custom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
 </resources>

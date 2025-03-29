@@ -1,9 +1,11 @@
 package com.pramod.horizontalcalendar
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.pramod.horizontal_calender.HorizontalCalendarView
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -12,12 +14,15 @@ import java.util.Locale
 
 private lateinit var horizontalCalendarView: HorizontalCalendarView
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(ContextCompat.getColor(this, com.pramod.horizontalcalendarview.R.color.colorPrimaryVariant))
+        )
         horizontalCalendarView = findViewById(R.id.horizontalCalendarView)
          val startDate = Calendar.getInstance().time
          val endDate = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.time

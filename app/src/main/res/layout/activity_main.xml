@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <com.pramod.horizontal_calender.HorizontalCalendarView
         android:id="@+id/horizontalCalendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dateColor="#F57C00"
-        app:dateSize="18dp"
-        app:selectedDateColor="#F8FAF8"
-        app:selectedDateBackgroundColor="#388E3C"
-        />
-
+        android:paddingVertical="8dp"
+        app:dateColor="#D5D3D3"
+        app:dateSize="16sp"
+        app:selectedDateBackgroundColor="#F57C00"
+        app:selectedDateColor="#ffffff" />
 
 
 </LinearLayout>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="2dp">
-
+    android:paddingBottom="4dp"
+    >
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCardView"
         android:layout_width="wrap_content"
@@ -17,10 +17,12 @@
       <TextView
           android:id="@+id/date"
           android:text="xxxxxxxxx"
-          android:paddingVertical="6dp"
-          android:paddingHorizontal="10dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
+          android:paddingVertical="8dp"
+          android:paddingHorizontal="14dp"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
