@@ -3,8 +3,14 @@
 The **HorizontalCalendarView** is a custom Android view that allows users to navigate and select dates in a horizontal calendar format. This guide explains how to implement, configure, and handle date selection with `HorizontalCalendarView`.
 
 
-![Horizontal Calendar View](assets/screen_2.png)
-![Horizontal Calendar View](assets/screen_1.png)
+## Screenshots
+
+<p align="center">
+  <img src="assets/screen_2.png" width="30%" style="margin-right: 40px;" />
+  <img src="assets/screen_1.png" width="30%" />
+</p>
+
+
 
 ---
 
